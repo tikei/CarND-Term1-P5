@@ -56,7 +56,7 @@ In particular the LUV color space appeared well suited for detecting white color
 
 I trained a linear SVM using, HOG features, color histogram and spatial binning. The spatial size selected to work well was (20,20) and the number of histogram bins for the color histogram was 128. Increasing the spatial size above (20,20) produced marginally better result but increased the size of the feature vector, which was not computationally practical. 
 
-###Sliding Window Search
+### Sliding Window Search
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
@@ -78,7 +78,7 @@ Here are some example images:
 ### Video Implementation
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./output_images/project_video_output.mp4)
 
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -93,7 +93,7 @@ I further used svc.decision_function to only accept detections where the classif
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
-### Here is frame and its corresponding heatmap:
+### Here is a frame and its corresponding heatmap:
 
 ![alt text][image6]
 
@@ -107,11 +107,9 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
-
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust? 
 
 I experimented with various parameters (from the number and type of images, to HOG and classifier parameters). I limited the area in the image where detections can occur in order to speed up the algorithm and also varied the size of the area depending on the scale at which detection can occur (vehicles further away can be detected only at smaller scales, while those near can be detected with larger scales).
 I also implemented an identification and tracking of individual vehicles. Each new detection then is allocated to previously detected cars if it overlaps with the previously detected bounding box of the car (using Intersection over Union algorithm). Then to present a smooth bounding box around the car, I averaged the bounding box for the individual car over the last n detections. 
